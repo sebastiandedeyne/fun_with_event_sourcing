@@ -13,7 +13,8 @@ defmodule EventSourcing.ProductProjecter do
   end
 
   def apply(:product_was_purchased, %{product_id: product_id, amount: amount}) do
-    product = Repo.get! Product, product_id
-    Repo.update! Product.changeset(product, %{stock: product.stock - amount})
+    Repo.get!(Product, product_id)
+    |> (&Product.changeset(&1, %{stock: &1.stock - amount})).()
+    |> Repo.update!
   end
 end

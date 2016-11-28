@@ -12,5 +12,6 @@ defmodule EventSourcing.Product do
   def changeset(product, params \\ %{}) do
     product
     |> cast(params, [:name, :price, :stock])
+    |> validate_required([:name, :price, :stock])
   end
 end
