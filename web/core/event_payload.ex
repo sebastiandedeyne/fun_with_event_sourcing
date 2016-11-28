@@ -8,9 +8,13 @@ defmodule EventSourcing.EventPayload do
 
     def dump(value), do: {:ok, keys_to_atoms(value)}
 
-    defp keys_to_atoms(map) do
+    def keys_to_atoms(map) do
       for {key, val} <- map, into: %{} do
-        {String.to_atom(key), val}
+        if is_atom(key) do
+          {key, val}
+        else
+          {String.to_atom(key), val}
+        end
       end
     end
   end
