@@ -1,4 +1,4 @@
-defmodule EventSourcing.ProductProjecter do
+defmodule EventSourcing.ProductProjector do
   alias EventSourcing.Repo
   alias EventSourcing.Product
   
@@ -17,4 +17,6 @@ defmodule EventSourcing.ProductProjecter do
     |> (&Product.changeset(&1, %{stock: &1.stock - amount})).()
     |> Repo.update!
   end
+
+  def apply(_, _), do: nil
 end
